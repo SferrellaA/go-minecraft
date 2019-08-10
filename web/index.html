@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Paolo's Minecraft Server</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Expires" content="0">
+	<link rel="stylesheet" href="main.css?<?php echo date('l jS \of F Y h:i:s A'); ?">
+	<link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/minecraftia" type="text/css"/>
+</head>
+<body style="font-family: 'MinecraftiaRegular';">
+	<script>
+		function changeView(view){
+			var main_view = document.getElementById("view");
+			main_view.src='/'+view;
+			
+			document.getElementById("status").style.backgroundColor = "Transparent";
+			document.getElementById("server").style.backgroundColor = "Transparent";
+			document.getElementById("backups").style.backgroundColor = "Transparent";
+			
+			var new_view = document.getElementById(view);
+			new_view.style.backgroundColor="#5B8B32"; 
+		}
+		window.onload = changeView('status');
+	</script>
+	<div class="main-container">
+		<div class="topnav">
+			<button id="status" onclick="changeView('status');" style="background-color: #5B8B32;">Status</button>
+			<button id="server" onclick="changeView('server');">Server</button>
+			<button id="backups" onclick="changeView('backups');">Backups</button>	
+		</div>
+		<div class="blurred-background"><img src="minecraft.png"></div>
+		<div class="main-content" style="text-align: center;">
+			<div style="height: 5%;"></div>
+			<iframe id="view" src="/status" frameborder="0" style="height: 80%; width: 90%; bottom: 10%;"></iframe>
+		</div>
+	</div>
+</body>
+</html>

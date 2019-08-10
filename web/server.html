@@ -1,0 +1,36 @@
+<html>
+	<head>
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Expires" content="0">
+		<link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/minecraftia" type="text/css"/>
+	</head>
+	<body style="font-family: 'MinecraftiaRegular'; text-align: center;">
+		<style>
+			button {
+				background-color: rgb(0,0,0); /* Fallback color */
+				background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+				color: white;
+				font-family: 'MinecraftiaRegular';
+				border: 3px solid #f1f1f1;
+				position: absolute;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				z-index: 2;
+				width: 80%;
+				padding: 20px;
+				text-align: center;
+			}
+		</style>
+		<script>
+			function server(state){
+				var url = document.URL + "/" + state;
+				window.location.replace(url);
+			}
+		</script>
+		<h1>Server Commands</h1>
+		<button style="top:40%;" onclick="server('start');">Start</button>
+		<button style="top:60%;" onclick="server('stop');">Stop</button>
+		<button style="top:80%;" onclick="server('reboot');">Reboot</button>
+	</body>
+</html>

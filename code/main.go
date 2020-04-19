@@ -2,23 +2,15 @@ package main
 
 import (
 	"fmt"
-	"net/http"
 	"os"
-	"path/filepath"
+
+	"github.com/gin-gonic/gin"
 )
 
 var (
-	dir     = ""    // Path of the golang binary
-	running = false // Server is off by default
+	cfg configs
+	web webAssets
 )
-
-// Return true if err is an error
-func errCheck(err error) bool {
-	if nil != err {
-		return true
-	}
-	return false
-}
 
 // Exit the program if err is an error
 func errFail(err error) {
@@ -29,19 +21,32 @@ func errFail(err error) {
 }
 
 func main() {
-	
-	// Find where we're running from
-	d, err := os.Executable()
-	if nil != err {
-		panic(err)
+	var err error
+
+	// Gather settings
+	s := gin.Default()
+	cfg, err = readConfigs()
+	errFail(err)
+	web, err = loadAssets()
+	errFail(err)
+
+	// Begin sub-processes
+	if cfg.autoKill {
+		go autokillServer(cfg.autoKillTimeout)
 	}
-	dir = filepath.Dir(d)
+
+	// Establish routes
+	s.GET("/", mainPage)
+	s.GET("/web/:asset", webAsset)
+	s.GET("/status", serverStatus)
+	s.GET("/server", listActions)
+	s.GET("/server/:serverAction", serverAction)
+	s.GET("/backup", listBackups)
+	s.GET("/backup/:version", getBackup)
+
+	// Start the server
+	s.Run("localhost:" + cfg.port)
 
 	// Turn server off if no one on
-	go autokillServer()
-
-	// Handle the admin page
-	configure_server()
-	err = http.ListenAndServe(":80", nil)
-	errFail(err)
+	// go autokillServer()
 }

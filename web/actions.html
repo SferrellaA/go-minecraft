@@ -24,14 +24,14 @@
 			}
 		</style>
 		<script>
-			function server(state){
-				var url = document.URL + "/" + state;
+			function command(state){
+				var url = "/server/" + state;
 				window.location.replace(url);
 			}
 		</script>
-		<h1>Server Commands</h1>
-		<button style="top:40%;" onclick="server('start');">Start</button>
-		<button style="top:60%;" onclick="server('stop');">Stop</button>
-		<button style="top:80%;" onclick="server('reboot');">Reboot</button>
+		<button style="top:20%;" onclick="command('start');" >Start</button>
+		<button style="top:40%;" onclick="command('stop');"  >Stop</button>
+		<button style="top:60%;" onclick="command('reboot');">Reboot</button>
+		<button style="top:80%;" onclick="command('backup');">Backup</button>
 	</body>
 </html>

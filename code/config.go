@@ -9,6 +9,7 @@ type configs struct {
 	serverName      string
 	port            string
 	autoKill        bool
+	portListen      bool
 	autoKillTimeout int
 	scriptsDir      string
 	backupsDir      string
@@ -20,6 +21,7 @@ func readConfigs() (configs, error) {
 		serverName:      "Alex's Minecraft Server",
 		port:            "8080",
 		autoKill:        true,
+		portListen:      true,
 		autoKillTimeout: 5,
 		scriptsDir:      "./scripts",
 		backupsDir:      "../backups",

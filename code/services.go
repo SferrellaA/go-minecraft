@@ -1,6 +1,8 @@
 package main
 
 import (
+	"bytes"
+	"fmt"
 	"net"
 	"os"
 	"os/exec"
@@ -96,4 +98,33 @@ func genHTML(body string) []byte {
 	htmlString += body
 	htmlString += "</body>"
 	return []byte(htmlString)
+}
+
+func whitelistListener(port int) {
+	listener, err := net.Listen("tcp", "localhost:25565")
+	errFail(err)
+	defer listener.Close()
+
+	for {
+		connection, err := listener.Accept()
+		if nil != err {
+			continue
+		}
+		buf := make([]byte, 100)
+		reqLen, err := connection.Read(buf)
+		if nil != err {
+			continue
+		}
+		buf = buf[:reqLen]
+
+		index := bytes.Index(buf, []byte{2, 11, 0, 9})
+		if index != -1 {
+			// TODO check the whitelist
+			fmt.Println(string(buf[index+4:]))
+		} else {
+			// TODO add some kind of logging
+			fmt.Println(string(buf))
+		}
+		// TODO add option for open port pint
+	}
 }

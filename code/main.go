@@ -21,6 +21,7 @@ func errFail(err error) {
 }
 
 func main() {
+
 	var err error
 
 	// Gather settings
@@ -33,6 +34,9 @@ func main() {
 	// Begin sub-processes
 	if cfg.autoKill {
 		go autokillServer(cfg.autoKillTimeout)
+	}
+	if cfg.portListen {
+		whitelistListener(25565)
 	}
 
 	// Establish routes
